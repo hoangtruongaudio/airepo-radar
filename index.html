@@ -107,11 +107,11 @@ body.repo-drawer-open{overflow:hidden}
 .repo-video-frame{position:relative;aspect-ratio:16/9;border-radius:9px;background:#090c13;display:grid;place-items:center;overflow:hidden}
 .repo-video-frame video,.repo-video-frame iframe{width:100%;height:100%;border:0;display:block;object-fit:contain}
 .repo-video-frame .btn{max-width:95%;font-size:12px}
-.repo-video-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+.repo-video-status{padding:9px 3px 0;font-size:11px;min-height:27px;color:#aac4e8}.repo-video-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
 .repo-video-actions a{color:#8abfff;text-decoration:underline;font-size:12px}
 .repo-video-empty{padding:14px;border:1px dashed #42506a;border-radius:10px;color:var(--muted);font-size:13px;margin-top:10px}
 </style></head>
-<body><div class="app"><aside class="sidebar"><div class="brand"><div class="logo">R</div><div><b>REPO RADAR</b><small>AI RESEARCH SYSTEM · V2.4</small></div></div><div class="navlabel">WORKSPACE</div><button class="nav active" data-view="dashboard" title="Dashboard">◈ <span>Dashboard</span></button><button class="nav" data-view="explore" title="Xếp hạng">▤ <span>Xếp hạng Repo</span></button><button class="nav" data-view="favorites" title="Theo dõi">☆ <span>Đang theo dõi</span></button><button class="nav" data-view="office" title="Trung tâm 3D">▧ <span>Trung tâm AI 3D</span></button><button class="nav" data-view="settings" title="Giao diện">⚙ <span>Cài đặt & Màu sắc</span></button><div class="spacer"></div><div class="sidebottom"><div class="online">FREE / PUBLIC API</div><div class="sub" style="font-size:11px;margin-top:7px">Không cần Ollama • Lưu cục bộ</div></div></aside>
+<body><div class="app"><aside class="sidebar"><div class="brand"><div class="logo">R</div><div><b>REPO RADAR</b><small>AI RESEARCH SYSTEM · V2.6</small></div></div><div class="navlabel">WORKSPACE</div><button class="nav active" data-view="dashboard" title="Dashboard">◈ <span>Dashboard</span></button><button class="nav" data-view="explore" title="Xếp hạng">▤ <span>Xếp hạng Repo</span></button><button class="nav" data-view="favorites" title="Theo dõi">☆ <span>Đang theo dõi</span></button><button class="nav" data-view="office" title="Trung tâm 3D">▧ <span>Trung tâm AI 3D</span></button><button class="nav" data-view="settings" title="Giao diện">⚙ <span>Cài đặt & Màu sắc</span></button><div class="spacer"></div><div class="sidebottom"><div class="online">FREE / PUBLIC API</div><div class="sub" style="font-size:11px;margin-top:7px">Không cần Ollama • Lưu cục bộ</div></div></aside>
 <main class="main"><div class="top"><div class="crumb">REPO RADAR <span style="color:var(--accent)">/</span> <strong id="breadcrumb">Dashboard</strong></div><div class="topright"><span class="topdate" id="currentDate"></span><span class="pill" id="apiStatus">GitHub API • Chưa tải</span><button class="btn small" id="refreshTop">↻ Làm mới</button></div></div>
 <section id="dashboard" class="view"><div class="heading"><div><div class="eyebrow">DISCOVER · ANALYZE · TRACK</div><h1>Khám phá <span>AI mã nguồn mở.</span></h1><p class="sub">Theo dõi xu hướng GitHub, phân tích dự án và lưu danh sách nghiên cứu trên một giao diện.</p></div><button class="btn primary" onclick="showView('explore')">Khám phá repo →</button></div>
 <div class="cards"><div class="card"><div class="kicker">Repo đang hiển thị</div><div class="kpi" id="statRepo">—</div><div class="statfoot">Từ GitHub API / bộ lọc hiện tại</div></div><div class="card"><div class="kicker">Tổng sao của tập dữ liệu</div><div class="kpi" id="statStars">—</div><div class="statfoot">Không phải số sao tăng tuần</div></div><div class="card"><div class="kicker">Repo đang theo dõi</div><div class="kpi" id="statFav">0</div><div class="statfoot">Lưu trên trình duyệt</div></div><div class="card"><div class="kicker">Cập nhật lần cuối</div><div class="kpi" style="font-size:20px" id="statTime">—</div><div class="statfoot">Dữ liệu mới khi nhấn làm mới</div></div></div>
@@ -130,7 +130,7 @@ body.repo-drawer-open{overflow:hidden}
 <div class="airow"><button class="btn primary" id="saveWorker" type="button">Lưu kết nối trên thiết bị này</button><button class="btn small" id="clearWorker" type="button">Xóa kết nối</button><input id="geminiModel" class="inputbox" style="max-width:245px" value="gemini-3.8-flash" placeholder="Tên model Gemini" aria-label="Tên model"></div>
 <div class="notice">🔒 Bạn chỉ nhập địa chỉ Worker và mã truy cập riêng <b>một lần trên mỗi máy/iPhone</b> (miễn là không xóa dữ liệu website). Mã truy cập lưu trong localStorage: người có quyền truy cập thiết bị hoặc mã độc chạy cùng website có thể đọc được. Không dùng trên máy lạ. <b>Không dán Gemini API key vào đây.</b> Đây là công cụ cá nhân, không phải hệ thống đăng nhập nhiều người.</div>
 </div><div class="two"><div class="panel"><h2>Bảng màu Cyber tùy chỉnh</h2><p class="sub" style="margin:8px 0 17px">Thử màu trực tiếp; cập nhật toàn bộ giao diện, biểu đồ và trung tâm 3D.</p><div class="colorarea"><button class="swatch" style="background:#f34d64" data-color="#f34d64" title="Đỏ Cyber"></button><button class="swatch" style="background:#54a7ff" data-color="#54a7ff" title="Xanh điện tử"></button><button class="swatch" style="background:#a685ff" data-color="#a685ff" title="Tím AI"></button><button class="swatch" style="background:#32d8bb" data-color="#32d8bb" title="Xanh ngọc"></button><button class="swatch" style="background:#ffb86e" data-color="#ffb86e" title="Cam"></button><input type="color" class="colorinput" id="customColor" value="#f34d64" aria-label="Chọn màu khác"><span id="hexValue" class="mini">#F34D64</span></div><div style="margin-top:22px"><button class="btn" id="resetColor">Khôi phục mặc định</button></div></div><div class="panel"><h2>Thông tin & riêng tư</h2><div class="tablemini" style="margin-top:15px"><span>Backend AI</span><b>Cloudflare Worker (tùy chọn)</b><span>Dữ liệu API</span><b>GitHub công khai</b><span>Danh sách theo dõi</span><b>localStorage</b><span>Phân tích nâng cao</span><b>Quy tắc README + Gemini Online tùy chọn</b><span>AI offline</span><b>Không sử dụng</b><span>Hỗ trợ điện thoại</span><b>Responsive</b></div><div class="notice" style="margin-top:20px">Khi xóa dữ liệu trình duyệt hoặc đổi thiết bị, danh sách theo dõi có thể mất. Hãy xuất JSON để sao lưu.</div></div></div></section>
-<footer class="footer">AI REPO RADAR V2.5 • Dữ liệu trực tiếp: GitHub REST API • Biểu đồ: tổng sao từ tập kết quả • Không có dữ liệu giả lập trong bảng xếp hạng.</footer></main></div><div id="toast" class="toast hidden" role="status"></div>
+<footer class="footer">AI REPO RADAR V2.6 • Dữ liệu trực tiếp: GitHub REST API • Biểu đồ: tổng sao từ tập kết quả • Không có dữ liệu giả lập trong bảng xếp hạng.</footer></main></div><div id="toast" class="toast hidden" role="status"></div>
 
 <div class="repo-drawer-layer" id="repoDrawerLayer" aria-hidden="true">
  <div class="repo-drawer-shade" id="repoDrawerShade"></div>
@@ -320,25 +320,34 @@ function detectRepoVideos(readme,repo){
  return candidates;
 }
 function renderRepoVideos(videos){
- if(!videos.length)return '<div class="repo-video-empty">Chưa phát hiện liên kết video trong README chính. Repo vẫn có thể có video trong tài liệu con, Releases hoặc website riêng. <b>Không có liên kết</b> không có nghĩa là dự án không có video demo.</div>';
+ if(!videos.length)return '<div class="repo-video-empty">Chưa phát hiện video trong README chính. Có thể kiểm tra thêm mục Docs, Releases hoặc website của tác giả. Không tìm thấy liên kết không có nghĩa là repo không có video.</div>';
  return '<div class="repo-video-grid">'+videos.map((v,index)=>{
   const url=escapeHTML(v.url),title=escapeHTML(v.title);
-  let player='';
-  if(v.kind==='youtube')player='<button class="btn primary" type="button" data-video="'+index+'">▶ Xem YouTube tại đây</button>';
-  else if(v.kind==='vimeo')player='<button class="btn primary" type="button" data-video="'+index+'">▶ Xem Vimeo tại đây</button>';
-  else if(v.kind==='video')player='<video controls preload="none" playsinline referrerpolicy="no-referrer"><source src="'+url+'">Trình duyệt chưa hỗ trợ video này.</video>';
-  else player='<a class="btn" href="'+url+'" target="_blank" rel="noopener noreferrer">▶ Xem video tại nguồn ↗</a>';
-  return '<article class="repo-video-card"><h4>▶ '+title+'</h4><div class="repo-video-frame" id="repoVideoFrame'+index+'">'+player+'</div><div class="repo-video-actions"><a href="'+url+'" target="_blank" rel="noopener noreferrer">Mở liên kết gốc ↗</a></div><p>'+(v.kind==='attachment'?'Video đính kèm GitHub: mở ở trang nguồn nếu không phát được tại đây.':v.kind==='external'?'Video ở trang ngoài: mở nguồn để xem.':'Video từ đường dẫn công khai được tìm thấy trong README.')+'</p></article>';
+  const isEmbed=['youtube','vimeo','video','attachment'].includes(v.kind);
+  const button=isEmbed?'<button class="btn primary" type="button" data-video="'+index+'">▶ Phát tại AI REPO RADAR</button>':'<a class="btn" href="'+url+'" target="_blank" rel="noopener noreferrer">Mở nguồn video ↗</a>';
+  return '<article class="repo-video-card"><h4>▶ '+title+'</h4><div class="repo-video-frame" id="repoVideoFrame'+index+'">'+button+'</div><div class="repo-video-status" id="repoVideoStatus'+index+'" role="status" aria-live="polite">'+(isEmbed?'Nhấn Phát để xem ngay tại đây.':'Nguồn này chưa hỗ trợ phát trực tiếp.')+'</div><div class="repo-video-actions"><a href="'+url+'" target="_blank" rel="noopener noreferrer">Mở liên kết gốc ↗</a></div><p>'+(v.kind==='attachment'?'Tệp video đính kèm GitHub: hỗ trợ phát thử trực tiếp và báo lỗi nếu máy chủ không cho phép.': 'Video tìm thấy trong tài liệu README của dự án. Vui lòng kiểm tra tác giả và nguồn đăng.')+'</p></article>';
  }).join('')+'</div>';
 }
 function attachRepoVideoControls(videos){
- document.querySelectorAll('#repoVideos [data-video]').forEach(button=>button.addEventListener('click',()=>{
-  const n=Number(button.dataset.video),v=videos[n],frame=$('repoVideoFrame'+n);
+ const area=document.getElementById('repoVideos'); if(!area)return;
+ area.querySelectorAll('[data-video]').forEach(button=>button.addEventListener('click',()=>{
+  const n=Number(button.dataset.video),v=videos[n],frame=document.getElementById('repoVideoFrame'+n),status=document.getElementById('repoVideoStatus'+n);
   if(!v||!frame)return;
-  let src='';
-  if(v.kind==='youtube')src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'?autoplay=1&rel=0';
-  else if(v.kind==='vimeo')src='https://player.vimeo.com/video/'+encodeURIComponent(v.id)+'?autoplay=1';
-  if(src){const iframe=document.createElement('iframe');iframe.src=src;iframe.title=v.title;iframe.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allowFullscreen=true;iframe.loading='lazy';frame.replaceChildren(iframe)}
+  // Only use recognized, validated https video URLs from detectRepoVideos.
+  if(v.kind==='youtube'||v.kind==='vimeo'){
+   const src=v.kind==='youtube'?'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'?autoplay=1&rel=0':'https://player.vimeo.com/video/'+encodeURIComponent(v.id)+'?autoplay=1';
+   const iframe=document.createElement('iframe');iframe.src=src;iframe.title=v.title;iframe.allow='autoplay; encrypted-media; picture-in-picture; web-share';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allowFullscreen=true;
+   iframe.loading='eager';frame.replaceChildren(iframe);status.textContent='Nếu video bị chặn phát nhúng, hãy dùng liên kết Mở nguồn video bên dưới.';
+   return;
+  }
+  if(v.kind!=='video'&&v.kind!=='attachment')return;
+  const player=document.createElement('video');player.controls=true;player.playsInline=true;player.preload='metadata';player.style.background='#050810';player.setAttribute('aria-label','Phát video '+v.title);
+  // Do not send viewer page URL to third-party video hosts.
+  player.referrerPolicy='no-referrer';
+  player.src=v.url; frame.replaceChildren(player);status.textContent='Đang kết nối nguồn video…';
+  player.addEventListener('loadedmetadata',()=>{status.textContent='Đã tải video. Nhấn ▶ nếu trình duyệt không tự phát.'},{once:true});
+  player.addEventListener('error',()=>{status.textContent='Không thể phát video trực tiếp. Nguồn có thể chặn tải, dùng định dạng không hỗ trợ hoặc liên kết đã hết hạn. Hãy chọn “Mở liên kết gốc”.';},{once:true});
+  const attempt=player.play();if(attempt&&typeof attempt.catch==='function')attempt.catch(()=>{if(player.error)return;status.textContent='Trình duyệt không cho tự phát: hãy nhấn ▶ trên khung video.';});
  }));
 }
 
@@ -482,8 +491,8 @@ window.inspectRepo=async function(full){
    <div class="repo-drawer-privacy">Chỉ khi bạn nhấn Phân tích AI, mô tả/README công khai mới được gửi đến Google. API có giới hạn và có thể phát sinh phí tùy tài khoản.</div>
   </section>
   <section id="repoVideos" class="repo-section">
-    <div class="panelhead"><h2>▶ Video demo & hướng dẫn</h2><span class="tag">${videos.length} liên kết tìm thấy</span></div>
-    <p class="sub">Tự tìm liên kết video công khai có trong README chính. Nhấn xem ngay hoặc mở nguồn nếu trang không cho phép phát nhúng. Video có thể do tác giả hoặc cộng đồng đăng, cần kiểm tra nguồn.</p>
+    <div class="panelhead"><h2>▶ Xem video ngay tại AI REPO RADAR</h2><span class="tag">${videos.length} liên kết tìm thấy</span></div>
+    <p class="sub">Tìm link video trong README công khai; phát trực tiếp MP4/WebM, video đính kèm GitHub và nhúng YouTube/Vimeo khi nguồn cho phép. Nếu không phát được, hãy mở liên kết gốc.</p>
     ${renderRepoVideos(videos)}
   </section>
   <section id="repoReadme" class="repo-section">
